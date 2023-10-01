@@ -77,7 +77,7 @@ public class ProductRepository implements IProductRepository {
     public List<Product> findByName(String name) {
         List<Product> products = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM products" +
+            String sql = "SELECT * FROM products " +
                     "WHERE name = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
