@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Libardo Pantoja
  */
 public class GUIProductsFind extends javax.swing.JDialog {
-    private ProductService productService;
+    private final ProductService productService;
     /**
      * Creates new form GUIProductsFind
      */
@@ -35,21 +35,22 @@ public class GUIProductsFind extends javax.swing.JDialog {
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Id", "Name", "Description"
+                    "Id", "Name", "Description", "Category"
                 }
         ));
     }
     
-        private void fillTable(List<Product> listProducts) {
+    private void fillTable(List<Product> listProducts) {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
 
-        Object rowData[] = new Object[3];//No columnas
-        for (int i = 0; i < listProducts.size(); i++) {
-            rowData[0] = listProducts.get(i).getProductId();
-            rowData[1] = listProducts.get(i).getName();
-            rowData[2] = listProducts.get(i).getDescription();
-            
+        Object[] rowData = new Object[4];//No columnas
+        for (Product listProduct : listProducts) {
+            rowData[0] = listProduct.getProductId();
+            rowData[1] = listProduct.getName();
+            rowData[2] = listProduct.getDescription();
+            rowData[3] = listProduct.getCategory().getName();
+
             model.addRow(rowData);
         }
     }
