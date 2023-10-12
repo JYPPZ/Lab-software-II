@@ -5,5 +5,4 @@ public interface ICategoryRepository {
     boolean save(Category miCategoria);
 
     long findId(String name);
-
 }
