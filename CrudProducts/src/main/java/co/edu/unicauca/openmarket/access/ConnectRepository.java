@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 public class ConnectRepository {
     private Connection conn;
+    
     public ConnectRepository(){
         initDatabase();
     }
@@ -22,12 +23,20 @@ public class ConnectRepository {
         String sql = "CREATE TABLE IF NOT EXISTS products (\n"
                 + "	productId integer PRIMARY KEY AUTOINCREMENT,\n"
                 + "	name text NOT NULL,\n"
-                + "	description text NULL\n"
+                + "	description text NULL,\n"
+                + " categoryId integer,\n"
+                + " FOREIGN KEY (categoryId) REFERENCES category(categoryId)\n"
+                + ");";
+        
+        String sqlC = "CREATE TABLE IF NOT EXISTS category (\n"
+                + "	categoryId integer PRIMARY KEY AUTOINCREMENT,\n"
+                + "	catName text NOT NULL\n"
                 + ");";
 
         try {
             this.connect();
             Statement stmt = conn.createStatement();
+            stmt.execute(sqlC);
             stmt.execute(sql);
             //this.disconnect();
 
@@ -48,16 +57,5 @@ public class ConnectRepository {
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void disconnect() {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
     }
 }

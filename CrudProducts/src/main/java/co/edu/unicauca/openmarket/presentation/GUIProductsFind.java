@@ -7,11 +7,8 @@ package co.edu.unicauca.openmarket.presentation;
 
 import co.edu.unicauca.openmarket.domain.Product;
 import co.edu.unicauca.openmarket.domain.service.ProductService;
-import co.edu.unicauca.openmarket.infra.Messages;
-
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -71,6 +68,7 @@ public class GUIProductsFind extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         rdoId = new javax.swing.JRadioButton();
         rdoName = new javax.swing.JRadioButton();
+        rdoCategory = new javax.swing.JRadioButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         btnSearchAll = new javax.swing.JButton();
@@ -110,6 +108,10 @@ public class GUIProductsFind extends javax.swing.JDialog {
         buttonGroup1.add(rdoName);
         rdoName.setText("Nombre del producto");
         pnlNorth.add(rdoName);
+
+        buttonGroup1.add(rdoCategory);
+        rdoCategory.setText("categoria del producto");
+        pnlNorth.add(rdoCategory);
 
         txtSearch.setPreferredSize(new java.awt.Dimension(62, 32));
         pnlNorth.add(txtSearch);
@@ -160,6 +162,8 @@ public class GUIProductsFind extends javax.swing.JDialog {
             fillTable(products);
         }else if(rdoName.isSelected()){
             fillTable(productService.findProductByName(txtSearch.getText()));
+        }else {
+            fillTable(productService.findProdcutByCategory(this.txtSearch.getText()));
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -175,6 +179,7 @@ public class GUIProductsFind extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlNorth;
+    private javax.swing.JRadioButton rdoCategory;
     private javax.swing.JRadioButton rdoId;
     private javax.swing.JRadioButton rdoName;
     private javax.swing.JTable tblProducts;

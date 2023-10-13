@@ -1,6 +1,7 @@
 package co.edu.unicauca.openmarket.presentation;
 
 import co.edu.unicauca.openmarket.domain.Product;
+import co.edu.unicauca.openmarket.domain.service.CategoryService;
 import co.edu.unicauca.openmarket.domain.service.ProductService;
 import co.edu.unicauca.openmarket.infra.Messages;
 import javax.swing.JOptionPane;
@@ -12,17 +13,18 @@ import javax.swing.JOptionPane;
 public class GUIProducts extends javax.swing.JFrame {
 
     private ProductService productService;
+    private CategoryService categoryService;
     private boolean addOption;
 
     /**
      * Creates new form GUIProducts
      */
-    public GUIProducts(ProductService productService) {
+    public GUIProducts(ProductService productService, CategoryService categoryService) {
         initComponents();
         this.productService = productService;
+        this.categoryService = categoryService;
         stateInitial();
-
-    }
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,6 +51,12 @@ public class GUIProducts extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
+        cbxTypeCategory = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombreCategoria = new javax.swing.JTextField();
+        btnGuardarCategoria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Productos");
@@ -114,33 +122,106 @@ public class GUIProducts extends javax.swing.JFrame {
         getContentPane().add(pnlSouth, java.awt.BorderLayout.SOUTH);
 
         pnlCenter.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        pnlCenter.setLayout(new java.awt.GridLayout(3, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("*Id:");
-        pnlCenter.add(jLabel1);
 
         txtId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtIdFocusLost(evt);
             }
         });
-        pnlCenter.add(txtId);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("*Nombre:");
-        pnlCenter.add(jLabel2);
-        pnlCenter.add(txtName);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Descripción:");
-        pnlCenter.add(jLabel3);
 
         txtDescription.setColumns(20);
         txtDescription.setRows(5);
         jScrollPane1.setViewportView(txtDescription);
 
-        pnlCenter.add(jScrollPane1);
+        jLabel4.setText("Categoria:");
+
+        jLabel6.setText("Nombre: ");
+
+        jLabel5.setText("Añadir categoria");
+
+        btnGuardarCategoria.setText("Guardar Categoria");
+        btnGuardarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCategoriaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
+        pnlCenter.setLayout(pnlCenterLayout);
+        pnlCenterLayout.setHorizontalGroup(
+            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCenterLayout.createSequentialGroup()
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64)
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlCenterLayout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(jLabel5))
+                            .addGroup(pnlCenterLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnGuardarCategoria))))
+                        .addGap(0, 94, Short.MAX_VALUE))
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxTypeCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        pnlCenterLayout.setVerticalGroup(
+            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCenterLayout.createSequentialGroup()
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(10, Short.MAX_VALUE))
+            .addGroup(pnlCenterLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxTypeCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(68, 68, 68)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardarCategoria)
+                .addGap(34, 34, 34))
+        );
 
         getContentPane().add(pnlCenter, java.awt.BorderLayout.CENTER);
 
@@ -185,22 +266,6 @@ public class GUIProducts extends javax.swing.JFrame {
         txtId.requestFocus();
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void txtIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusLost
-        if (txtId.getText().trim().isEmpty()) {
-            return;
-        }
-        Long productId = Long.parseLong(txtId.getText());
-        Product prod = productService.findProductById(productId);
-        if (prod == null) {
-            Messages.showMessageDialog("El identificador del producto no existe", "Error");
-            txtId.setText("");
-            txtId.requestFocus();
-        } else {
-            txtName.setText(prod.getName());
-            txtDescription.setText(prod.getDescription());
-        }
-    }//GEN-LAST:event_txtIdFocusLost
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String id = txtId.getText().trim();
         if (id.isEmpty()) {
@@ -222,6 +287,47 @@ public class GUIProducts extends javax.swing.JFrame {
         GUIProductsFind instance = new GUIProductsFind(this, true, productService);
         instance.setVisible(true);
     }//GEN-LAST:event_btnFindActionPerformed
+
+    private void btnGuardarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCategoriaActionPerformed
+        String nameCategory = txtNombreCategoria.getText();
+        if (txtNombreCategoria.getText().trim().isEmpty()) {
+            Messages.showMessageDialog("Debe ingresar el nombre del producto", "Atención");
+            txtNombreCategoria.requestFocus();
+            return;
+        }
+        addCategory();
+        cbxTypeCategory.addItem(nameCategory);
+        //limpiar caja de texto
+        txtNombreCategoria.setText("");
+    }//GEN-LAST:event_btnGuardarCategoriaActionPerformed
+
+    private void txtIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusLost
+        if (txtId.getText().trim().isEmpty()) {
+            return;
+        }
+        Long productId = Long.parseLong(txtId.getText());
+        Product prod = productService.findProductById(productId);
+        if (prod == null) {
+            Messages.showMessageDialog("El identificador del producto no existe", "Error");
+            txtId.setText("");
+            txtId.requestFocus();
+        } else {
+            txtName.setText(prod.getName());
+            txtDescription.setText(prod.getDescription());
+        }
+    }//GEN-LAST:event_txtIdFocusLost
+    
+    private void addCategory(){
+        String name = txtNombreCategoria.getText().trim();
+        if (categoryService.saveCategory(name)) {
+            Messages.showMessageDialog("Se grabó con éxito", "Atención");
+            cleanControls();
+            stateInitial();
+        } else {
+            Messages.showMessageDialog("Error al grabar", "Atención");
+        }
+    }
+    
     private void stateEdit() {
         btnNuevo.setVisible(false);
         btnEditar.setVisible(false);
@@ -255,17 +361,23 @@ public class GUIProducts extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnFind;
+    private javax.swing.JButton btnGuardarCategoria;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cbxTypeCategory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlSouth;
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtNombreCategoria;
     // End of variables declaration//GEN-END:variables
 
     private void stateNew() {
@@ -291,8 +403,9 @@ public class GUIProducts extends javax.swing.JFrame {
     private void addProduct() {
         String name = txtName.getText().trim();
         String description = txtDescription.getText().trim();
+        String nameCategory = (String) cbxTypeCategory.getSelectedItem();
 
-        if (productService.saveProduct(name, description)) {
+        if (productService.saveProduct(name, description, nameCategory,categoryService.findId(nameCategory))) {
             Messages.showMessageDialog("Se grabó con éxito", "Atención");
             cleanControls();
             stateInitial();
