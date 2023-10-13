@@ -1,7 +1,5 @@
 package co.edu.unicauca.openmarket.access;
 
-import java.sql.Connection;
-
 /**
  * Fabrica que se encarga de instanciar ProductRepository o cualquier otro que
  * se cree en el futuro.
@@ -10,36 +8,6 @@ import java.sql.Connection;
  */
 public class Factory {
 
-    private static Factory instance;
-
     private Factory() {
-    }
-
-    /**
-     * Clase singleton
-     *
-     * @return la intancia de factory
-     */
-    public static Factory getInstance() {
-
-        if (instance == null) {
-            instance = new Factory();
-        }
-        return instance;
-
-    }
-
-    /**
-     * Método que crea una instancia concreta de la jerarquia IProductRepository
-     *
-     * @param type cadena que indica qué tipo de clase hija debe instanciar
-     * @return una clase hija de la abstracción IProductRepository
-     */
-    public ConnectRepository getRepository(String type) {
-        ConnectRepository result = null;
-        if (type.equals("default")) {
-            result = new ConnectRepository();
-        }
-        return result;
     }
 }
